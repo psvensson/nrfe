@@ -64,7 +64,15 @@ nrfe.prototype.instantiateWidget = function(widget_def, parent)
 
 //------------------------------------------------
 
-//var definition =
+var definition =
+[
+	{"type":"tab","id":"4414fb4e.bbeb04","label":"Sheet 1"},
+	{"id":"ca61f614.359e08","type":"input","z":"4414fb4e.bbeb04","name":"Some Input","x":447.8958282470703,"y":746.8888854980469,"wires":[[]]},
+	{"id":"8e68bbf6.719748","type":"page","z":"4414fb4e.bbeb04","x":476.8958282470703,"y":423.8888854980469,"wires":[["d85d02b6.27a3","8d23e6ae.72dc18"]]},
+	{"id":"d85d02b6.27a3","type":"section","z":"4414fb4e.bbeb04","x":447.8958282470703,"y":550.8888854980469,"wires":[["ca61f614.359e08"]]},
+	{"id":"8d23e6ae.72dc18","type":"section","z":"4414fb4e.bbeb04","x":648.8957977294922,"y":547.8889465332031,"wires":[["72907ee5.8d6f8"]]},
+	{"id":"72907ee5.8d6f8","type":"button","z":"4414fb4e.bbeb04","name":"OK","x":674.8958282470703,"y":749.8888854980469,"wires":[[],[]]}
+]
 
 
 //------------------------------------------------
