@@ -13,47 +13,35 @@ Demonstration of the Cordova Accelerometer API.
 	<title>Node-red Front-end Test</title>
 
 	<style>
-	@import 'ui/css/evothings-app.css';
-
-	#sprite
-	{
-		position: absolute;
-		width: 300px;
-		height: auto;
-		top: 0px;
-		left: 0px;
-		z-index: 1000;
-		display: none;
-	}
+	@import 'ui/mdl/material.min.css';
 	</style>
 
 	<script>
 	// Redirect console.log to Evothings Workbench.
 	if (window.hyper && window.hyper.log) { console.log = hyper.log }
 	</script>
+	<script src="ui/mdl/material.min.js"></script>
 
 </head>
 
 <body>
+	<div class="demo-layout-transparent mdl-layout mdl-js-layout">
+		<header class="mdl-layout__header mdl-layout__header--transparent">
 
-	<header>
-		<button class="back" onclick="history.back()">
-			<img src="ui/images/arrow-left.svg" />
-		</button>
+			<img class="logotype" src="ui/images/logo.svg" alt="Evothings" />
 
-		<img class="logotype" src="ui/images/logo.svg" alt="Evothings" />
+			<!--<button class="menu" onclick=""><img src="ui/images/menu.svg" /></button>-->
+		</header>
 
-		<!--<button class="menu" onclick=""><img src="ui/images/menu.svg" /></button>-->
-	</header>
+		<div id="content"></div>
 
-	<h1>Node-Red front-End</h1>
+		<script src="cordova.js"></script>
+		<script src="libs/evothings/evothings.js"></script>
+		<script src="libs/bower_components/mustache.js/mustache.js"></script>
+		<script src="SpriteManager.js"></script>
 
-	<script src="cordova.js"></script>
-	<script src="libs/evothings/evothings.js"></script>
-	<script src="SpriteManager.js"></script>
-
-	<script src="libs/nrfe.js"></script>
-
+		<script src="libs/nrfe.js"></script>
+	</div>
 </body>
 
 </html>
