@@ -20,7 +20,9 @@ Demonstration of the Cordova Accelerometer API.
 	// Redirect console.log to Evothings Workbench.
 	if (window.hyper && window.hyper.log) { console.log = hyper.log }
 	</script>
+	<script src="libs/jquery/jquery.js"></script>
 	<script src="ui/mdl/material.min.js"></script>
+
 
 </head>
 
@@ -39,8 +41,17 @@ Demonstration of the Cordova Accelerometer API.
 		<script src="libs/evothings/evothings.js"></script>
 		<script src="libs/bower_components/mustache.js/mustache.js"></script>
 		<script src="SpriteManager.js"></script>
+		<script src=""></script>
 
 		<script src="libs/nrfe.js"></script>
+		<script>
+			$.ajax({url: "flows.json"}).done(function(definition)
+			{
+				//------------------------------------------------
+				var generator = new nrfe(document.getElementById("content"));
+				generator.render(JSON.parse(definition));
+			});
+		</script>
 	</div>
 </body>
 

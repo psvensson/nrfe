@@ -89,10 +89,34 @@ var inst_table =
 		//node.style = "container: 'flex', flexDirection: "+def.direction;
 		return node;
 	},
+	'text': function(def, parent)
+	{
+		var node = document.createElement('div');
+		node.className = "mdl-cell mdl-cell--4-col mdl-cell--stretch";
+		//node.style = "container: 'flex', flexDirection: "+def.direction;
+		console.log(JSON.stringify(def));
+		node.innerHTML = def.text;
+		return node;
+	},
+	'image': function(def, parent)
+	{
+		var node = document.createElement('div');
+		node.className = "mdl-cell mdl-cell--4-col mdl-cell--stretch";
+		var img = document.createElement('img');
+		img.style.height='100px';
+		img.style.width='100px';
+		img.style.zIndex='1000';
+		node.appendChild(img);
+		//node.style = "container: 'flex', flexDirection: "+def.direction;
+		console.log('settings img.src to '+def.image);
+		img.src = def.image;
+		console.log(JSON.stringify(def));
+		return node;
+	},
 	'template': function(def, parent)
 	{
 		var node = document.createElement('div');
-		node.innerHTML = "fooz";
+		//node.innerHTML = "fooz";
 		def.in = function(msg)
 		{
 			//console.log('template got message');
@@ -135,6 +159,46 @@ var inst_table =
 			}
 		};
 
+	},
+	'picklist': function(def, parent)
+	{
+		var node = document.createElement('div');
+		node.className = "mdl-cell mdl-cell--4-col mdl-cell--stretch";
+		//node.style = "container: 'flex', flexDirection: "+def.direction;
+		console.log(JSON.stringify(def));
+
+		tdef = def.picklist.split(',');
+
+		var table = document.createElement('table');
+		table.className = "mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp";
+		var thead = document.createElement('thead');
+		table.appendChild(thead);
+		var thtr = document.createElement('tr');
+		thead.appendChild(thtr);
+		tdef.forEach(function(colname)
+		{
+			var th = document.createElement('th');
+			th.innerHTML = colname;
+			thtr.appendChild(th);
+		});
+		var tbody = document.createElement('tbody');
+		table.appendChild(tbody);
+
+		def.in = function(msg)
+		{
+			var tr = document.createElement('tr');
+			tbody.appendChild(tr);
+			tdef.forEach(function(colval)
+			{
+				var td = document.createElement('td');
+				td.innerHTML = msg.payload[colval];
+				tr.appendChild(td);
+			});
+		};
+
+		//-----------------------
+		node.appendChild(table);
+		return node;
 	}
 };
 
@@ -147,6 +211,8 @@ nrfe.prototype.render = function(fedef)
 	var page = undefined;
 	if(fedef)
 	{
+		console.log('rendering fe def '+fedef);
+		console.dir(fedef);
 		fedef.forEach(function(wdef)
 		{
 			if(wdef.type === 'page')
@@ -226,158 +292,4 @@ nrfe.prototype.instantiateWidget = function(widget_def, parentNode)
 	return node;
 };
 
-//------------------------------------------------------------------------------- Definition
 
-var definition =
-	[
-		{
-			"type": "tab",
-			"id": "cb6121bd.349ee",
-			"label": "Sheet 1"
-		},
-		{
-			"id": "11ad4194.ee52be",
-			"type": "page",
-			"background": "afaf",
-			"x": 1046.8958587646484,
-			"y": 172.88888549804688,
-			"z": "cb6121bd.349ee",
-			"wires": [
-				[
-					"1e4a38bc.e1b5c7",
-					"44a92a1a.bb56d4"
-				]
-			]
-		},
-		{
-			"id": "1e4a38bc.e1b5c7",
-			"type": "section",
-			"x": 1394.8959197998047,
-			"y": 375.8888854980469,
-			"z": "cb6121bd.349ee",
-			"wires": [
-				[
-					"c259c8b8.3da638"
-				]
-			]
-		},
-		{
-			"id": "44a92a1a.bb56d4",
-			"type": "section",
-			"x": 956.8957977294922,
-			"y": 358.8888854980469,
-			"z": "cb6121bd.349ee",
-			"wires": [
-				[
-					"914d31e3.6eb2d",
-					"b19e28bd.4e61d8",
-					"556f9cdb.aa9064"
-				]
-			]
-		},
-		{
-			"id": "914d31e3.6eb2d",
-			"type": "input",
-			"name": "",
-			"x": 749.8957977294922,
-			"y": 511.888916015625,
-			"z": "cb6121bd.349ee",
-			"wires": [
-				[
-					"3448e27f.cbb71e"
-				]
-			]
-		},
-		{
-			"id": "b19e28bd.4e61d8",
-			"type": "button",
-			"name": "OK",
-			"x": 1214.8959197998047,
-			"y": 511.8888854980469,
-			"z": "cb6121bd.349ee",
-			"wires": [
-				[],
-				[
-					"d6d24ce5.292db"
-				]
-			]
-		},
-		{
-			"id": "d6d24ce5.292db",
-			"type": "event",
-			"name": "Event",
-			"event": "click",
-			"x": 1053.895980834961,
-			"y": 676.8889465332031,
-			"z": "cb6121bd.349ee",
-			"wires": [
-				[
-					"ff7d73c8.00829"
-				]
-			]
-		},
-		{
-			"id": "c259c8b8.3da638",
-			"type": "template",
-			"name": "Event handler output",
-			"field": "payload",
-			"format": "handlebars",
-			"template": "Found Bluetooth device <b>{{payload.name}}</b> !",
-			"x": 1468.8959197998047,
-			"y": 679.8889465332031,
-			"z": "cb6121bd.349ee",
-			"wires": [
-				[]
-			]
-		},
-		{
-			"id": "556f9cdb.aa9064",
-			"type": "template",
-			"name": "Input field output",
-			"field": "payload",
-			"format": "handlebars",
-			"template": "This is the payload: {{payload.srcElement.value}} !",
-			"x": 987.8958282470703,
-			"y": 516.8888854980469,
-			"z": "cb6121bd.349ee",
-			"wires": [
-				[]
-			]
-		},
-		{
-			"id": "3448e27f.cbb71e",
-			"type": "event",
-			"name": "Event",
-			"event": "change",
-			"x": 779.8958282470703,
-			"y": 627.8888854980469,
-			"z": "cb6121bd.349ee",
-			"wires": [
-				[
-					"556f9cdb.aa9064"
-				]
-			]
-		},
-		{
-			"id": "ff7d73c8.00829",
-			"type": "bluetooth",
-			"name": "bluetooth",
-			"bluetooth": "click",
-			"x": 1255.8958282470703,
-			"y": 678.8888854980469,
-			"z": "cb6121bd.349ee",
-			"wires": [
-				[
-					"c259c8b8.3da638"
-				]
-			]
-		}
-	]
-
-
-
-
-//------------------------------------------------
-
-var generator = new nrfe(document.getElementById("content"));
-generator.render(definition);
