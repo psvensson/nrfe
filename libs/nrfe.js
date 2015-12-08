@@ -65,7 +65,8 @@ var inst_table =
 	{
 		var node = document.createElement('div');
 		node.className="mdl-grid";
-		node.style.background = def.background;
+		node.setAttribute('style', def.style);
+		console.log('page style = '+def.style)
 		node.style.height = "100%";
 		node.style.flexDirection = def.direction || 'col';
 		return node;
@@ -74,7 +75,8 @@ var inst_table =
 	{
 		var node = document.createElement('div');
 		node.className = "mdl-cell mdl-cell--4-col mdl-cell--stretch";
-		//node.style = "container: 'flex', flexDirection: "+def.direction;
+		node.setAttribute('style',def.style);
+		console.log('section style = '+def.style)
 		return node;
 	},
 	'text': function(def, parent)
@@ -233,7 +235,7 @@ var inst_table =
 				{
 					var p = {payload:item};
 					console.log('sending item '+JSON.stringify(p));
-					def.out(p)
+					def.out(p);
 				});
 			}
 		};
@@ -241,6 +243,43 @@ var inst_table =
 		//-----------------------
 		node.appendChild(table);
 		return node;
+	},
+	'cdbattery': function(def, parent)
+	{
+		window.addEventListener("batterystatus", function(info)
+		{
+			def.out({payload: info});
+		}, false);
+		window.addEventListener("batterycritical", function(info)
+		{
+			def.out({payload: info});
+		}, false);
+		window.addEventListener("batterylow", function(info)
+		{
+			def.out({payload: info});
+		}, false);
+	},
+	'cdgeolocation': function(def, parent)
+	{
+		var onSuccess = function(position)
+		{
+			def.out({payload:position})
+		};
+		var onError = function(error)
+		{
+			def.out({error:error});
+		};
+		def.in = function(msg)
+		{
+			navigator.geolocation.getCurrentPosition(onSuccess, onError);
+		}
+	},
+	'cdvibration': function(def, parent)
+	{
+		def.in = function(msg)
+		{
+			navigator.vibrate(parseInt(def.vibration));
+		}
 	}
 };
 
