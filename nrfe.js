@@ -63,7 +63,8 @@ nrfe.prototype.renderWidget = function(widget_def, parentNode)
 		if(node && widget_def.events && !widget_def.evented)
 		{
 			widget_def.evented = true;
-			var events = widget_def.events.split(',');
+			var earr = widget_def.events || [];
+			var events = earr.split(',');
 			//var events = ['click','change','keypress','keyup','keydown', 'focus','blur'];
 			events.forEach(function(handler)
 			{
