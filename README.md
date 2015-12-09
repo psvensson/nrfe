@@ -1,8 +1,3 @@
-# Cordova demo app
+# Node-Red Front-End
 
-This app demonstrates how to read the accelerometer of a mobile phone or tablet using Cordova.
-
-The app displays an image that can be moved by tilting the phone or tablet in various directions.
-
-Have fun!
-# nrfe
+This is a parser of node-red files that wire together front-end logic widgets and modules made in the node-red branch of Evothings Studio, essentially leveraging the visual flow-based programming model of node-red for mobile IoT web app development.
