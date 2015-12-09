@@ -1,6 +1,6 @@
 {
-  "name": "node-red front-end library",
-  "version": "0.0.1",
+  "name": "nrfe",
+  "version": "0.0.4",
   "homepage": "https://github.com/psvensson/nrfe",
   "authors": [
     "psvensson <psvensson@gmail.com>"
