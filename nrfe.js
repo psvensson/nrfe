@@ -1,3 +1,4 @@
+
 var nrfe = function(target)
 {
 	this.target = target;
@@ -119,3 +120,8 @@ nrfe.prototype.instantiateWidget = function(widget_def, parentNode)
 	}
 	return node;
 };
+
+define("function",	function()
+{
+	return nrfe;
+});
