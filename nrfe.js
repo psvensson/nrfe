@@ -1,3 +1,19 @@
+var nrfe = function(target)
+{
+	this.target = target;
+	this.version = "0.0.1";
+	this.widgets = [];
+	console.log = hyper.log;
+}
+
+var dump = function(o)
+{
+	for(var p in o)
+	{
+		console.log(p+' -> '+o[p]);
+	}
+}
+
 //------------------------------------------------------------------------------- Parsing
 
 nrfe.prototype.render = function(fedef)
