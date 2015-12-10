@@ -3,6 +3,7 @@ define('nrfe', function()
 	var inst_table = [];
 	var nrfe = function(modules, target, cb)
 	{
+		console.log('nrfe adding widgets at DOM node '+target);
 		this.target = target;
 		this.widgets = [];
 
@@ -12,9 +13,13 @@ define('nrfe', function()
 		}
 		require(modules, function()
 		{
+			for(var i = 0; i < modules.length; i++)
+			{
+				console.log('adding nrfe widget '+modules[i]);
+				inst_table[modules[i]] = arguments[i];
+			}
 			cb();
 		})
-
 
 		var dump = function(o)
 		{
@@ -24,11 +29,6 @@ define('nrfe', function()
 			}
 		}
 
-		for(var i = 0; i < modules.length; i++)
-		{
-			console.log('adding nrfe widget '+modules[i]);
-			inst_table[modules[i]] = arguments[i];
-		}
 		nrfe.prototype.render = function(fedef)
 		{
 			console.log('NRFE parsing front-end definition');

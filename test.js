@@ -13,12 +13,12 @@ requirejs.config(
 // Start the main app logic.
 requirejs(['nrfe', 'json!nrfe-widgets/widgetlist.json'], function(nrfe, widgetlist)
 	{
-		var def = [];
+		var target = document.body
 		console.log('widgetlist is');
 		console.dir(widgetlist);
 		console.log('nrfe is');
 		console.dir(nrfe);
-		var _nrfe = new nrfe(widgetlist, def, function()
+		var _nrfe = new nrfe(widgetlist, target, function()
 		{
 			console.log('gogogo');
 		});
