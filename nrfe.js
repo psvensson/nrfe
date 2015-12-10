@@ -1,25 +1,30 @@
 define('nrfe', function()
 {
-	var inst_table = [];
-	var nrfe = function(modules, target, cb)
+
+	var nrfe = function(modules, cb)
 	{
-		console.log('nrfe adding widgets at DOM node '+target);
-		this.target = target;
 		this.widgets = [];
+		this.inst_table = [];
 
 		if(window.hyper)
 		{
 			console.log = hyper.log;
 		}
-		require(modules, function()
+		console.log('nrfe constructor starting to reel in modules...');
+		console.dir(modules);
+		require(modules.widgets, function()
 		{
-			for(var i = 0; i < modules.length; i++)
+			console.log('---- modules loaded ----');
+			console.dir(arguments);
+			for(var i = 0; i < modules.widgets.length; i++)
 			{
-				console.log('adding nrfe widget '+modules[i]);
-				inst_table[modules[i]] = arguments[i];
+				console.log('adding nrfe widget '+modules.widgets[i]);
+				this.inst_table[modules.widgets[i]] = arguments[i];
 			}
+			console.dir(this.inst_table);
+			console.log('this is');
 			cb();
-		})
+		}.bind(this))
 
 		var dump = function(o)
 		{
@@ -29,9 +34,10 @@ define('nrfe', function()
 			}
 		}
 
-		nrfe.prototype.render = function(fedef)
+		nrfe.prototype.render = function(fedef, target)
 		{
-			console.log('NRFE parsing front-end definition');
+			console.log('nrfe preparing to add widgets at DOM node '+target);
+			this.target = target;
 			console.dir(fedef);
 			var page = undefined;
 			if(fedef)
@@ -52,14 +58,14 @@ define('nrfe', function()
 
 		nrfe.prototype.renderWidget = function(widget_def, parentNode)
 		{
-			//console.log('NRFE parsing widget '+widget_def.type);
+			console.log('NRFE parsing widget '+widget_def.type);
 			if(widget_def   )
 			{
 				var node = widget_def.node || this.instantiateWidget(widget_def, parentNode);
 				widget_def.node = node;
 				if(parentNode && widget_def.node)
 				{
-					//console.log('* * appending '+widget_def.type+' under '+parentNode);
+					console.log('* * appending '+widget_def.type+' under '+parentNode);
 					parentNode.appendChild(node);
 				}
 				if(widget_def.wires && !widget_def.wired)
@@ -95,7 +101,7 @@ define('nrfe', function()
 		{
 			console.log('NRFE instantiating widget '+widget_def.type+', under parent node '+parentNode);
 			//console.dir(widget_def)
-			var nodeCreator = inst_table[widget_def.type];
+			var nodeCreator = this.inst_table[widget_def.type];
 			var node = undefined;
 			if(nodeCreator)
 			{
