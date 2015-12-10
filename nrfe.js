@@ -26,7 +26,7 @@ define('nrfe', function()
 			cb();
 		}.bind(this))
 
-		var dump = function (o)
+		window.dump = function (o)
 		{
 			for (var p in o)
 			{
