@@ -6,33 +6,44 @@ define('nrfe', function()
 		this.widgets = [];
 		this.inst_table = [];
 
-		if(window.hyper)
+		if (window.hyper)
 		{
 			console.log = hyper.log;
 		}
 		console.log('nrfe constructor starting to reel in modules...');
 		console.dir(modules);
-		require(modules.widgets, function()
+		var count = modules.widgets.length;
+		require(modules.widgets, function ()
 		{
 			console.log('---- modules loaded ----');
 			console.dir(arguments);
-			for(var i = 0; i < modules.widgets.length; i++)
+			for (var i = 0; i < modules.widgets.length; i++)
 			{
-				console.log('adding nrfe widget '+modules.widgets[i]);
-				this.inst_table[modules.widgets[i]] = arguments[i];
+				console.log('adding nrfe widget ' + modules.widgets[i]);
+				mod = require([modules.widgets[i]], function (m)
+				{
+					this.inst_table[modules.widgets[i]] = m;
+					if (--count === 0)
+					{
+						cb();
+					}
+				}.bind(this))
+				console.log('mod is ');
+				console.dir(mod);
 			}
 			console.dir(this.inst_table);
 			console.log('this is');
-			cb();
+
 		}.bind(this))
 
-		var dump = function(o)
+		var dump = function (o)
 		{
-			for(var p in o)
+			for (var p in o)
 			{
-				console.log(p+' -> '+o[p]);
+				console.log(p + ' -> ' + o[p]);
 			}
 		}
+	};
 
 		nrfe.prototype.render = function(fedef, target)
 		{
@@ -138,7 +149,7 @@ define('nrfe', function()
 			}
 			return node;
 		};
-	}
+
 
 	console.log('returning nrfe..');
 	return nrfe;
