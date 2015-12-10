@@ -10,30 +10,20 @@ define('nrfe', function()
 		{
 			console.log = hyper.log;
 		}
-		console.log('nrfe constructor starting to reel in modules...');
-		console.dir(modules);
+		//console.log('nrfe constructor starting to reel in modules...');
+		//console.dir(modules);
 		var count = modules.widgets.length;
 		require(modules.widgets, function ()
 		{
-			console.log('---- modules loaded ----');
-			console.dir(arguments);
+			//console.log('---- modules loaded ----');
+			//console.dir(arguments);
 			for (var i = 0; i < modules.widgets.length; i++)
 			{
-				console.log('adding nrfe widget ' + modules.widgets[i]);
-				mod = require([modules.widgets[i]], function (m)
-				{
-					this.inst_table[modules.widgets[i]] = m;
-					if (--count === 0)
-					{
-						cb();
-					}
-				}.bind(this))
-				console.log('mod is ');
-				console.dir(mod);
+				//console.log('adding nrfe widget ' + modules.widgets[i]);
+				this.inst_table[modules.widgets[i].replace('nrfe-widgets/','')] = arguments[i]
 			}
 			console.dir(this.inst_table);
-			console.log('this is');
-
+			cb();
 		}.bind(this))
 
 		var dump = function (o)
@@ -47,9 +37,9 @@ define('nrfe', function()
 
 		nrfe.prototype.render = function(fedef, target)
 		{
-			console.log('nrfe preparing to add widgets at DOM node '+target);
+			//console.log('nrfe.render  preparing to add widgets at DOM node '+target);
 			this.target = target;
-			console.dir(fedef);
+			//console.dir(fedef);
 			var page = undefined;
 			if(fedef)
 			{
@@ -69,14 +59,14 @@ define('nrfe', function()
 
 		nrfe.prototype.renderWidget = function(widget_def, parentNode)
 		{
-			console.log('NRFE parsing widget '+widget_def.type);
+			//console.log('NRFE parsing widget '+widget_def.type);
 			if(widget_def   )
 			{
 				var node = widget_def.node || this.instantiateWidget(widget_def, parentNode);
 				widget_def.node = node;
 				if(parentNode && widget_def.node)
 				{
-					console.log('* * appending '+widget_def.type+' under '+parentNode);
+					//console.log('* * appending '+widget_def.type+' under '+parentNode);
 					parentNode.appendChild(node);
 				}
 				if(widget_def.wires && !widget_def.wired)
