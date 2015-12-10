@@ -1,6 +1,6 @@
 var modules = [ 'nrfe-widgets/page', 'nrfe-widgets/bleservices','nrfe-widgets/bluetooth',
 	'nrfe-widgets/button','nrfe-widgets/cdbattery','nrfe-widgets/cdgeolocation',
-	'nrfe-widgets/cdvibration','nrfe-widgets/event','nrfe-widgets/fefunction',
+	'nrfe-widgets/cdvibration','nrfe-widgets/event','nrfe-widgets/function',
 	'nrfe-widgets/image','nrfe-widgets/input','nrfe-widgets/picklist','nrfe-widgets/section',
 	'nrfe-widgets/template','nrfe-widgets/text'];
 
