@@ -66,18 +66,31 @@ define('nrfe', function()
 				widget_def.node = node;
 				if(parentNode && widget_def.node)
 				{
-					//console.log('* * appending '+widget_def.type+' under '+parentNode);
-					this.appendChildInOrder(parentNode, widget_def, node);
+					console.log('* * appending '+widget_def.type+' under '+parentNode);
+					//this.appendChildInOrder(parentNode, widget_def, node);
+					parentNode.appendChild(node)
 				}
 				if(widget_def.wires && !widget_def.wired)
 				{
 					widget_def.wired = true;
+
+					var sortedChildren = [];
 					widget_def.wires.forEach(function(widget_def_child)
 					{
 						widget_def_child.forEach(function(childid)
 						{
-							this.renderWidget(this.widgets[childid], node);
+							var w = this.widgets[childid];
+							w._order = w._order || 1;
+							sortedChildren.push(w)
 						}.bind(this));
+					}.bind(this));
+					sortedChildren.sort(function(a, b)
+					{
+						return a._order === b._order ? 0 : (a._order > b._order ? 1 : -1);
+					});
+					sortedChildren.forEach(function(widget)
+					{
+						this.renderWidget(widget, node);
 					}.bind(this));
 				}
 				if(node && widget_def.events && !widget_def.evented)
@@ -98,22 +111,13 @@ define('nrfe', function()
 			}
 		};
 
-		nrfe.prototype.appendChildInOrder = function(parentNode, widget_def, node)
-		{
-			node._order = widget_def.order || 1;
-			var nodes = parentNode.childNodes;
-			nodes.sort(function(a, b)
-			{
-				a._order = a._order || 1;
-				b._order = b._order || 1;
-				return a._order === b._order ? 0 : (a._order > b._order ? 1 : -1);
-			});
-			parentNode.childNodes = nodes; // Redundant, most probably
-		};
-
 		nrfe.prototype.instantiateWidget = function(widget_def, parentNode)
 		{
 			console.log('NRFE instantiating widget '+widget_def.type+', under parent node '+parentNode);
+			if(!parentNode)
+			{
+				//zyzyzy();
+			}
 			//console.dir(widget_def)
 			var nodeCreator = this.inst_table[widget_def.type];
 			var node = undefined;
@@ -149,6 +153,10 @@ define('nrfe', function()
 						console.dir(msg);
 					};
 				}
+			}
+			else
+			{
+				console.log('******************************** COULD NOT FIND CREATOR FOR NODE TYPE '+widget_def.type);
 			}
 			return node;
 		};
