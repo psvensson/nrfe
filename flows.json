@@ -46,7 +46,7 @@
     "id": "b9b8a6dd.464758",
     "type": "image",
     "z": "60efd3b0.9f102c",
-    "image": "ui/images/logo.svg",
+    "image": "http://resources3.news.com.au/images/2010/10/21/1225941/548851-star-trek.gif",
     "x": 297,
     "y": 57,
     "wires": [[]]

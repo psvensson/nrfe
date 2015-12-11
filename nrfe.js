@@ -80,7 +80,7 @@ define('nrfe', function()
 						widget_def_child.forEach(function(childid)
 						{
 							var w = this.widgets[childid];
-							w._order = w._order || 1;
+							w._order = w.order || 1;
 							sortedChildren.push(w)
 						}.bind(this));
 					}.bind(this));
