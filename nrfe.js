@@ -67,11 +67,11 @@ define('nrfe', function()
 				if(parentNode && widget_def.node)
 				{
 					//console.log('* * appending '+widget_def.type+' under '+parentNode);
-					parentNode.appendChild(node);
+					this.appendChildInOrder(parentNode, widget_def, node);
 				}
 				if(widget_def.wires && !widget_def.wired)
 				{
-					widget_def.wired = true
+					widget_def.wired = true;
 					widget_def.wires.forEach(function(widget_def_child)
 					{
 						widget_def_child.forEach(function(childid)
@@ -96,6 +96,19 @@ define('nrfe', function()
 					});
 				}
 			}
+		};
+
+		nrfe.prototype.appendChildInOrder = function(parentNode, widget_def, node)
+		{
+			node._order = widget_def.order || 1;
+			var nodes = parentNode.childNodes;
+			nodes.sort(function(a, b)
+			{
+				a._order = a._order || 1;
+				b._order = b._order || 1;
+				return a._order === b._order ? 0 : (a._order > b._order ? 1 : -1);
+			});
+			parentNode.childNodes = nodes; // Redundant, most probably
 		};
 
 		nrfe.prototype.instantiateWidget = function(widget_def, parentNode)
