@@ -20,6 +20,7 @@
     "tests"
   ],
   "dependencies": {
+    "jquery": "~2.1.4",
     "material-design-lite": "~1.0.6",
     "mustache.js": "mustache#~2.2.0",
     "nrfe-widgets": "~0.0.2",

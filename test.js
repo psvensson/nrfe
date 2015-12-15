@@ -1,24 +1,16 @@
-requirejs.config(
-{
-	baseUrl: './bower_components',
-	paths:
-	{
-		Mustache: 'mustache.js/mustache',
-		json: 'requirejs-plugins/src/json',
-		text: 'requirejs-plugins/lib/text',
-		nrfe: '../nrfe'
-	}
-});
+// Should be loaded form index.html
+console.dir(nrfeWidgets)
 
-
-// Start the main app logic.
-requirejs(['nrfe', 'json!nrfe-widgets/widgetlist.json', 'json!../flows.json'], function(nrfe, widgetlist, flows)
+$.ajax({
+	complete: function(flows)
 	{
+		console.log('flows loaded..');
 		var target = document.getElementById('content');
-
-		var generator = new nrfe(widgetlist, function()
+		new nrfe(nrfeWidgets, function(generator)
 		{
 			console.log('gogogo');
-			generator.render(flows, target);
+			generator.render(JSON.parse(flows.responseText), target);
 		});
-	});
+	},
+	url: "flows.json"
+});
