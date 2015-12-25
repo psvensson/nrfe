@@ -131,6 +131,7 @@ nrfe.prototype.instantiateWidget = function(widget_def, parentNode)
 					if(!w.in)
 					{
 						console.log('***** ERROR: no "in" function defined at widget '+w+' '+widget_def.type)
+						dump(w);
 					}
 					else
 					{
